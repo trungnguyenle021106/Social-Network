@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>post create </title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script> 
+        <link rel="stylesheet" href="url" th:href="@{/css/style_post_add.css}" /> 
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <body style="background-color: whitesmoke" >
+
+        <div class="container-post">
+            <div class="noidung">
+                <div> Tạo bài viết mới </div>
+                
+                <a style="margin-top: 5px" href="/homes"  id="closeInp">
+                    <label style="width: 100%; height: 100%; cursor: pointer;">
+                        <img class="bth_close" src="/images/Ellipse 2.png" />
+                    </label>
+                </a>
+
+            </div>
+            <form class="form-control form-cusstom" method="post" action="/post/add" enctype="multipart/form-data" >
+                <div class="user" th:if="${user.isPresent()}">
+                    <input type="hidden" th:name="user_id" th:value="${user.get().user_id}" />
+                    <img class="image-user" th:src="@{/images/img_avt/{filename}(filename=${user.get().getAvata_url()})}" />
+                    <div class="User-name" th:text="${user.get().full_name}"> Tên user</div>
+                </div>
+                <div class="NDPost" >
+                    <textarea id="content" name="content" rows="3" placeholder="Nội dung post" required></textarea>
+                </div>
+                <img class="img-preview" id="previewImage" alt="">
+                <div class="input-img">
+                    <input type="file" name="file" id="fileInput" accept=".mp4, .avi, .mov, image/*" style="display: none;" >
+                    <label for="fileInput">
+                        <div class="text-hinhanh"> Thêm hình ảnh </div>
+                        <img class="Img-add" src="/images/iconhinhanh.png" />
+                    </label>
+                </div>
+                <input class="button-dang" value="Đăng" type="submit">
+            </form>
+        </div>
+    </body>
+    <script th:src="@{/js/post_edit.js}"></script>
+</html>

@@ -1,0 +1,149 @@
+.container-post {
+    width: 600px;
+    min-height: 500px;
+    margin: 100px auto;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px black solid;
+}
+
+.noidung {
+    width: 100%;
+    height: 50px;
+    border-bottom: solid 1px black;
+    display: flex;
+
+}
+
+.noidung div {
+    width: 90%;
+    height: 100%;
+    padding-top: 7px;
+    position: relative;
+    align-items: center;
+    text-align: center;
+    color: black;
+    font-size: 20px;
+    font-family: Inter;
+    font-weight: bold;
+    word-wrap: break-word;
+}
+
+.img-close {
+    width: 41px;
+    height: 32px;
+    margin: 7px auto;
+
+}
+
+.user {
+    width: 100%;
+    height: 70px;
+    display: flex;
+
+
+}
+
+.image-user {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: auto 15px;
+
+
+}
+
+.User-name {
+    width: auto;
+    padding-top: 7px;
+    text-align: left;
+    color: black;
+    font-size: 20px;
+    font-family: Inter;
+    font-weight: 600;
+    word-wrap: break-word
+}
+
+.NDPost {
+    width: 100%;
+    height: auto;
+
+}
+
+.NDPost textarea {
+    width: 94%;
+    height: 170px;
+
+    margin-left: 16px;
+    margin-right: 20px;
+    color: black;
+    font-size: 20px;
+    font-family: Inter;
+    font-weight: 500;
+    border: white;
+    resize: none;
+}
+
+.form-cusstom {
+    border: none;
+}
+
+.img-preview {
+    width: auto;
+    height: 100px;
+    margin-left: 16px;
+}
+
+.input-img {
+    width: auto;
+    height: auto;
+    margin: 16px;
+
+    background: white;
+    border: 1px black solid;
+
+}
+
+.input-img label {
+    width: auto;
+    height: auto;
+    display: flex;
+    margin: 7px;
+}
+
+
+
+.text-hinhanh {
+    width: 88%;
+    height: auto;
+    padding-top: 10px;
+    padding-right: 20px;
+    text-align: right;
+    color: black;
+    font-size: 20px;
+    font-family: Inter;
+    font-weight: 500;
+}
+
+.Img-add {
+    margin: 5px;
+    width: 50px;
+    height: 44px;
+
+}
+
+.button-dang {
+
+    width: 100%;
+
+    background: rgb(30, 79, 241);
+    border: 1px white solid;
+
+    border-radius: 10px;
+    font-family: Inter;
+    font-weight: 600;
+    color: white;
+    font-size: 20px;
+
+}

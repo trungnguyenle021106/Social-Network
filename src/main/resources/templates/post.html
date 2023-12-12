@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>post</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Post</h1>
+        <table border="1" class="table">
+            <tr>
+                <th>PostID</th>
+                <th>Content</th>
+                <th>Date</th>
+                <th>Url</th>
+                <th>Us ID</th>
+            </tr>
+            <tr th:each ="row, state:${list}">
+                <td th:utext="${row.post_id}"></td>
+                <td style="max-width: 300px;" th:utext="${row.getContent()}"></td>
+                <td th:utext="${row.getPostDate()}"></td>
+                <td th:utext="${row.getUrl()}"></td>
+                <td th:utext="${row.getMyUser().getUser_id()}"></td>
+                <td><a th:href="'/post/edit/'+ ${row.post_id}">Edit</a></td>   
+                <td><a th:href="'/post/delete/'+ ${row.post_id}">Delete</a></td>
+                <td><a th:href="'/likes/add/'+ ${row.post_id}">like</a></td>
+            </tr>
+        </table>
+        
+        <a class="btn btn-primary" href="/post/add">Thêm bài viết mới</a>
+
+<!--        <h1>Thêm Bài đăng Mới</h1>
+        <form method="post" action="/post/add" class="form">
+            <div class="mb-3">
+                <label for="content" class="form-label">Content:</label>
+                <input type="text" id="content" name="content" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="postDate" class="form-label">Date:</label>
+                <input type="date" id="postDate" name="postDate" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="url" class="form-label">Url:</label>
+                <input  id="url" name="url" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="myUser" class="form-label">Us Id:</label>
+                <input type="text" id="myUser" name="myUser.user_id" class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Thêm bài đăng</button>
+        </form>
+
+
+                test hiện thìj bài viết      
+        <div id="postContainer">
+             Hiển thị danh sách bài viết 
+            <div th:each="post : ${lsTop3}">
+                <div class="post">
+                     Hiển thị thông tin của bài viết 
+                    <h2 th:text="${post.getContent()}"></h2>
+                    <p th:text="${post.getPostDate()}"></p>
+                    <a href="" >Read more</a>
+                    <a th:href="@{'/post/' + ${post.post_id}}">Read more</a>
+                </div>
+            </div>
+        </div>
+
+         Thêm một nút để tải thêm bài viết 
+        <button id="loadMoreButton" class="button">Load More</button>-->
+
+        <!-- Thêm script để xử lý sự kiện khi nhấn nút "Load More" -->
+<!--        <script th:inline="javascript">
+            /*<![CDATA[*/
+            var page = 1;
+
+            $('#loadMoreButton').on('click', function () {
+                // Gửi yêu cầu AJAX để lấy thêm bài viết
+                $.ajax({
+                    type: 'GET',
+                    url: '/loadMorePosts',
+                    success: function (data) {
+                        // Hiển thị thêm bài viết mới
+                        var postHtml = '<div class="post">' +
+                                '<h2>' + data.getContent() + '</h2>' +
+                                '<p>' + data.getPostDate() + '</p>' +
+                                '<a href="">Read more</a>' +
+                                '</div>';
+                        $('#postContainer').append(postHtml);
+                        // Tăng số trang lên 1 để lấy bài viết tiếp theo
+                        page++;
+                    }
+                });
+            });
+            /*]]>*/
+        </script>-->
+
+
+    </body>
+</html>

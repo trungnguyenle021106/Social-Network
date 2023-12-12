@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>SHARE TABLE</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div style="width: 100%">
+            <h1>SHARE TABLE</h1>
+            <table border="1" style="width: 50%">
+                <tr>
+                    <th>SHARE_ID</th>
+                    <th>POST_ID</th>
+                    <th>MY_USER_ID</th>
+                    <th>FRIEND_USER_ID</th>
+                    <th>SHARE_DATE</th>
+                    <th>OPERTAION</th>
+                </tr>
+                <tr  th:each ="row, state:${list}">
+                    <td th:utext="${row.share_id}"></td>
+                    <td th:utext="${row.post_id}"></td>
+                    <td th:utext="${row.my_user_id}"></td>
+                    <td th:utext="${row.friend_user_id}"></td>
+                    <td th:utext="${row.share_date}"></td>
+                   
+                    <td style=" display: flex">
+                        <form method="post" th:action="@{/Share/delete/{shareId}(shareId=${row.share_id})}" style="margin: auto 5px" >
+                            <button type="submit" class="btn btn-primary" >DELETE</button>
+                        </form>
+                        <form method="get" th:action="@{/Share/edit/{shareId}(shareId=${row.share_id})}" style="margin: auto 5px" >
+                            <button type="submit" class="btn btn-primary" >EDIT</button>
+                        </form>
+                    </td>
+                                      
+                </tr>
+            </table>
+        </div>      
+
+        <div style="width: 10%; border: solid 1px black; margin: 50px 50px">
+            <form method="post" action="/Share/add">
+                <div class="mb-3">
+                    <label for="post_id" class="form-label">POST ID:</label>
+                    <input type="text" id="post_id" name="post_id" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="my_user_id" class="form-label">MY USER ID:</label>
+                    <input type="text" id="my_user_id" name="my_user_id" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="friend_user_id" class="form-label">FRIEND USER ID:</label>
+                    <input type="text" id="friend_user_id" name="friend_user_id" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="share_date" class="form-label">DATE:</label>
+                    <input type="date" id="share_date" name="share_date" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary" style="margin: 10px 50px">CHIA SẺ</button>
+            </form>
+
+        </div>
+       
+    </body>
+</html>

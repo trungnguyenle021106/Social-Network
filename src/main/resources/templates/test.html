@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Tìm kiếm với gợi ý</title>
+
+    </head>
+    <body>
+        Đây là test
+        <!-- Sử dụng Thymeleaf để hiển thị số liệu từ amountLSC cho từng bài đăng -->
+        <div th:each="post : ${posts}" >
+
+
+            <p th:text="${post.getPost().getContent()}"></p>
+            <p th:text="'Likes: ' + ${post.amountLike}"></p>
+            <p th:text="'Comments: ' + ${post.amountComment}"></p>
+            <p th:text="'Shares: ' + ${post.amountShare}"></p>
+        </div>
+
+
+    </body>
+</html>

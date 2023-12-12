@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <h1 style="display: none;">User ID: ${userId}</h1>
+        <h1>List fs</h1>
+        <table border="1" class="table">
+            <tr>
+                <th>STT</th>
+                <th>Tên</th>
+            </tr>
+            <tr th:each ="row, state:${friends}">
+                <td th:utext="${state.count}"></td>
+                <td th:utext="${row.getFriendUser().getFull_name()}"></td>
+                <td th:utext="${row.getMyUser().getFull_name()}"></td>
+                <td><a th:href="'/friends/unfriend/'+ ${userId} + '?friendId=' + ${row.getFriendship_id}">Unfriend</a></td> 
+            </tr>
+        </table>
+        <table border="2" class="table">
+            <tr>
+                <th>STT</th>
+                <th>Tên</th>
+            </tr>
+            <tr th:each ="row, state:${userlist}">
+                <td th:utext="${state.count}"></td>
+                <td th:utext="${row.getUser_id()}"></td>
+                <td th:utext="${row.getUsername()}"></td>
+                <td><a th:href="'/friends/add/'+ ${userId} + '?friendId=' + ${row.getUser_id()}">Add Friend</a></td> 
+            </tr>
+        </table>
+    </body>
+</html>

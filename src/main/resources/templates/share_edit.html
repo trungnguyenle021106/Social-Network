@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>share</div>
+        <div style="width: 15%; border: solid 1px black; margin: 50px 50px">
+            
+            <form th:action="@{/Share/edit/{id}}" th:object="${share}" method="post">
+
+                <!-- Input hidden để truyền share_id -->
+                <input type="hidden" th:field="*{share_id}" id="share_id" />
+
+                <div class="mb-3">
+                    <label for="post" class="form-label">POST ID:</label>
+                    <input type="text" th:field="*{post.post_id}" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="myUser" class="form-label">MY USER ID:</label>
+                    <input type="text" th:field="*{myUser.user_id}" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="friendUser" class="form-label">FRIEND USER ID:</label>
+                    <input type="text" th:field="*{friendUser.user_id}" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="share_date" class="form-label">DATE:</label>
+                    <input type="date" th:field="*{share_date}" class="form-control">
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="margin: 10px 50px">SAVE</button>
+            </form>
+
+
+        </div>
+    </body>
+</html>

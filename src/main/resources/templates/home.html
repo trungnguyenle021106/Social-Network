@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+    <head>
+        <meta charset="UTF-8">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="url" th:href="@{/css/index.css}"/>
+        <link rel="stylesheet" href="url" th:href="@{/css/style_post_detail.css}"/>
+        <title>Home</title>
+    </head>
+    <body>
+        <header>
+            <div class="header_primary fixed-top ">
+                <div class="header_left">
+                    <div class="logo">
+                        <img src="/images/facebook.jpg" alt="">
+                    </div>
+                    <!--                    DIEU CHINH CHO NÀY-->
+
+                    <input type="text" id="search-box" oninput="showSuggestions(this.value)" placeholder="Tìm kiếm trên Facebook">
+                    <div id="suggestion-box"></div>
+
+
+                    <!--                    DIEU CHINH CHO NÀY-->
+                </div>
+
+                <a class="create-post btn-primary " href="/post/add">
+                    Tạo bài viết mới
+                </a>
+
+                <div class="header_right">
+                    <div class="users">
+                        <span class="User_Name" th:utext="${user_login.getFull_name()}">Users</span>
+                        <img id="avatar-img" th:src="@{/images/img_avt/{imageUrl}(imageUrl=${user_login != null ? user_login.getAvata_url() : ''})}" alt="">
+                        <div id="dropdown-menu" style="display: none;">
+                            <button id="profileButton" type="button" class="btn btn-primary profileButton">Hồ sơ</button>
+                            <button id="logoutButton" onclick="LogOut()" class="btn btn-danger">Đăng xuất</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section>
+            <div class="content" style="margin-top: 70px; padding-bottom: 70px;">
+                <div class="left">
+                    <div class="left_title">
+                        <p>Bạn có thể biết</p>
+                    </div>
+                    <div class="left_primary">
+                        <div class="left_user" th:each="row, iterStat : ${userList}" th:if="${iterStat.index < 5}">
+                            <!--                            TN ĐÃ CHỈNH SỬA Ở ĐÂY  -->
+                            <form th:action="@{/us/profile/{userId}(userId=${row.getUser_id})}" method="get">
+
+                                <button class="img_left" style="border:none; background-color: whitesmoke;" type="submit">
+                                    <img style="width: 44px; height: 44px;" class="user_avt" th:src="@{/images/img_avt/{imageUrl}(imageUrl=${row.getAvata_url()})}" >
+                                </button>
+                            </form>
+                            <!--TN ĐÃ CHỈNH SỬA Ở ĐÂY  -->
+                            <div class="left_detail">
+                                <div class="left_name">
+                                    <p th:utext="${row.getFull_name()}"></p>
+                                    </div>
+                                    <div class="btn_left">
+                                        <input type="submit" name="" id="" value="Kết bạn" onclick="sendFriendRequest(this)" >
+                                    </div>
+                                    <p class="replacementText"></p>
+                                    <input type="hidden" name="user-id" th:value="${user_login.getUser_id()}" />
+                                    <input type="hidden" name="friendship-id" th:value="${row.getUser_id()}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="middle">
+                    <div th:if="${#lists.isEmpty(posts)}" style="margin: 20px auto" >
+                        <h1>Bạn chưa có bài viết nào, hãy tạo bài viết mới hoặc kết bạn thêm để xem bài viết.</h1>
+
+                    </div>
+
+                    <div class="PostDetail" th:each="post : ${posts}"  >
+
+                        <div class="My_user">
+                            <div style="width: 90%; display: flex;">
+
+                                <!--                                TN ĐÃ SỬA Ở ĐÂY-->
+                                <form th:action="@{/us/profile/{userId}(userId=${post.getPost().getMyUser().getUser_id})}" method="get">
+
+                                    <button  style="border:none; background-color: white" type="submit">
+                                        <img class="My_user_avt" th:src="@{/images/img_avt/{imageUrl}(imageUrl=${post.getPost().getMyUser().getAvata_url})}" >
+                                    </button>
+                                </form>
+                                <!--                                TN ĐÃ SỬA Ở ĐÂY-->                   
+
+                                <div>
+                                    <div class="My_User_Name" th:utext="${post.getPost().getMyUser().getFull_name}">Tên user</div>
+                                    <div class="post_date" th:text="${#strings.substring(post.getPost().getPostDate, 0, 10)}"><span>20-11-2023</span></div>
+                                </div>
+                            </div>
+                            <!-- Sử dụng Bootstrap classes để tạo dropdown -->
+                            <div>
+                                <div th:if="${post.getPost().getMyUser().getUser_id() == user_login.getUser_id()}" class="dropdown">
+                                    <button class=" c3 " type="button"  data-bs-toggle="dropdown" aria-expanded="false">
+                                        ...
+                                    </button>
+                                    <ul class="dropdown-menu align-items-sm-center " th:if="${post.getPost().getMyUser().getUser_id() == user_login.getUser_id()}" aria-labelledby="dropdownMenuButton1">
+                                        <li th:data-post-id="${post.getPost().getPost_id()}" ><a class="dropdown-item" th:href="'/post/edit/'+ ${post.getPost().getPost_id()}">Sửa</a></li>
+
+                                        <li th:id="${post.getPost().getPost_id()}" class="xoa" onclick="confirmDelete()"c><a class="dropdown-item" href="#" >Xóa</a></li>
+
+
+                                    </ul>
+                                </div>
+                                <div th:unless="${post.getPost().getMyUser().getUser_id() == user_login.getUser_id()}" class="dropdown">
+                                    <button class=" c3 " style="color: gray" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        ...
+                                    </button>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="Post_content">
+                            <p  th:utext="${post.getPost().getContent()}"  >
+                                Đây là một đoạn văn bản mẫu để hiển thị trong nội dung bài viết của bạn. Bạn có thể thay thế nó bằng nội
+                                dung
+                                thực tế mà bạn muốn hiển thị.
+                            </p>
+                        </div>
+
+                        <div class="media">
+                            <div class="Border_img" >
+                                <div th:if="${not #strings.isEmpty(post.getPost().getUrl())}"  >
+                                    <!-- Kiểm tra định dạng của file để quyết định sử dụng thẻ <img> hoặc <video> -->
+                                    <th:block th:if="${post.getPost().getUrl().toLowerCase().endsWith('.mp4') or post.getPost().getUrl().toLowerCase().endsWith('.avi') or post.getPost().getUrl().toLowerCase().endsWith('.mov')}">
+                                        <!-- Nếu là video, sử dụng thẻ S<video> -->
+                                        <video controls>
+                                            <source th:src="@{/images/img_post/{imageUrl}(imageUrl=${post.getPost().getUrl()})}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </th:block>
+                                    <th:block th:else >
+                                        <!-- Nếu không phải là video, sử dụng thẻ <img> -->
+                                        <img th:src="@{/images/img_post/{imageUrl}(imageUrl=${post.getPost().getUrl()})}" class="img-fluid" alt="" >
+                                    </th:block>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- like share comment       -->
+                        <div class="row count-like-commnet-share">
+                            <div class="col-sm " th:utext="${post.amountLike}"  id="likeAmount">300</div>
+                            <div class="col-sm "  th:utext="${post.amountComment}" id="commentAmount">300</div>
+                            <div class="col-sm "  th:utext="${post.amountShare}" id="shareAmount">300</div>
+                        </div>
+
+                        <div class="custom-container">
+                            <div class="row " style="border-top: solid 1px black;border-bottom: solid 1px black;">
+
+                                <a th:if="${post.blLike}" style="color: blue" class="col-sm column justify-content-center" th:href="'/post/detail/'+ ${post.post.post_id}">
+                                    <div class="custom-icon">
+                                        <img src="/images/liked.png" alt="Liked Icon">
+                                    </div>
+                                    Liked
+                                </a>
+
+                                <a th:unless="${post.blLike}" style="color: black" class="col-sm column justify-content-center" th:href="'/post/detail/'+ ${post.post.post_id}">
+                                    <div class="custom-icon">
+                                        <img src="/images/like.png" alt="Like Icon">
+                                    </div>
+                                    Like
+                                </a>
+
+
+
+                                <a th:href="'/post/detail/'+ ${post.getPost().getPost_id()}" class="col-sm column justify-content-center"
+                                   style="border-left: solid 1px black;border-right: solid 1px black;">
+                                    <div class="custom-icon">
+                                        <img src="/images/image_comment.png" alt="Comment Icon">
+                                    </div>
+                                    Comment
+                                </a>
+
+                                <a th:href="'/post/detail/'+ ${post.getPost().getPost_id()}" class="col-sm column justify-content-center">
+                                    <div class="custom-icon">
+                                        <img src="/images/image_share.png" alt="Share Icon">
+                                    </div> 
+                                    Share
+                                </a>
+
+                            </div>
+                        </div>
+                        <div class="list_comment" >
+
+                            <div class="User_Comment" th:each="comment : ${post.getPost().comments}" >
+
+                                <!--                             TN ĐÃ SỬA Ở ĐÂY-->
+                                <form th:action="@{/us/profile/{userId}(userId=${comment.getMyUser().getUser_id})}" method="get">
+
+                                    <button  style="border:none; background-color: white" type="submit">
+                                        <img class="My_user_avt" th:src="@{/images/img_avt/{imageUrl}(imageUrl=${comment.getMyUser().getAvata_url()})}" />
+
+                                    </button>
+                                </form>
+                                <!--                                TN ĐÃ SỬA Ở ĐÂY-->    
+
+
+                                <div class="Boder_comment">
+                                    <!--USER COMMENT-->
+                                    <div class="User_Name1" th:text="${comment.getMyUser().getFull_name()}" >Tên user</div>
+                                    <!--COMMENT ID-->
+                                    <div class="Content_commnent" th:text="${comment.getContent()}" > chắc chắn là thế rồi. Đây là một đoạn văn bản mẫu để hiển thị trong nội dung bài viết của bạn. Bạn có thể thay thế nó bằng nội
+                                        dung
+                                        thực tế mà bạn muốn hiển thị.</div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>  
+
+                    <!-- Các phần tử hiển thị bài viết -->
+                    <div id="postContainer">
+                        <!-- Nội dung bài viết hiện tại -->
+                    </div>
+
+                    <!-- Button để tải thêm bài viết -->
+                    <div th:if="${#lists.size(posts) >= 5}" >
+                        <button  class="btn-primary" id="loadMoreButton" style="margin: 20px auto">Tải thêm</button>
+
+                    </div>
+
+
+                </div>
+                <div class="right">
+                    <div class="right_primary">
+                        <div class="right_box_1">
+                            <div class="right_title" style="margin-top: 10px;">
+                                <p>Lời mời kết bạn</p>
+                            </div>
+                            <div class="box_1_primary">
+                                <div class="right_user" th:each="row : ${inviteList}"> 
+                                    <div class="img_right">
+
+                                        <!--                                TN ĐÃ SỬA Ở ĐÂY-->
+                                        <form th:action="@{/us/profile/{userId}(userId=${row.getMyUser().getUser_id})}" method="get">
+
+                                            <button  style="border:none; background-color: whitesmoke" type="submit">
+                                                <img style="width: 44px; height: 44px;" class="Invite_avt" th:src="@{/images/img_avt/{imageUrl}(imageUrl=${row.getMyUser().getAvata_url()})}" >
+                                            </button>
+                                        </form>
+                                        <!--                                TN ĐÃ SỬA Ở ĐÂY-->  
+
+                                        <!--                                        <img class="Invite_avt" th:src="@{/images/{imageUrl}(imageUrl=${row.getMyUser().getAvata_url()})}" >-->
+                                    </div>
+                                    <div class="right_detail">
+                                        <div class="right_name">
+                                            <p th:utext="${row.getMyUser().getFull_name()}"></p>
+                                        </div>
+                                        <div class="btn_right">
+                                            <input type="submit" name="" class="acceptBtn" value="Chấp nhận" onclick="accpectInviteFromHome(this)">
+                                            <input type="submit" name="" class="rejectBtn" value="Từ chối" onclick="accpectInviteFromHome(this)">
+                                        </div>
+
+                                        <p class="replacementText"></p>
+                                        <!-- Include hidden input fields for user_id -->
+                                        <input type="hidden" name="friendship-id" th:value="${row.getFriendship_id()}" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="line">
+
+                        </div>
+                        <div class="right_box_2">
+                            <div class="right_title">
+                                <p>Bạn bè</p>
+                            </div>
+
+                            <div class="box_2_primary">
+                                <div class="right_user_box_2" th:each="row : ${friendList}">
+                                    <div class="img_right_box_2">
+
+                                        <!--                                TN ĐÃ SỬA Ở ĐÂY-->
+                                        <form th:action="@{/us/profile/{userId}(userId=${row.getFriendUser().getUser_id})}" method="get">
+
+                                            <button  style="border:none; background-color: whitesmoke" type="submit">
+                                                <img class="Friend_avt" th:src="@{/images/img_avt/{imageUrl}(imageUrl=${row.getFriendUser().getAvata_url()})}" >
+                                            </button>
+                                        </form>
+                                        <!--                                TN ĐÃ SỬA Ở ĐÂY-->  
+
+                                        <!--                                        <img class="Friend_avt" th:src="@{/images/{imageUrl}(imageUrl=${row.getFriendUser().getAvata_url()})}" >-->
+                                    </div>
+                                    <div class="right_name_box_2">
+                                        <p th:utext="${row.getFriendUser().getFull_name()}"></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <script src="/js/post_detail.js"></script>
+    <script src="/js/home.js"></script>
+</html>

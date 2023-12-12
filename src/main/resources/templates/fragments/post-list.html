@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <!-- Trong file fragments/post-list.html -->
+        <div th:fragment="postList">
+
+            <div class="PostDetail" th:each="post : ${posts}"  >
+
+                <div class="My_user">
+                    <div style="width: 90%; display: flex;">
+
+                        <img class="My_user_avt" th:src="@{/images/{imageUrl}(imageUrl=${post.getPost().getMyUser().getAvata_url})}" >
+                        <div>
+                            <div class="My_User_Name" th:utext="${post.getPost().getMyUser().getFull_name}">Tên user</div>
+                            <div class="post_date" th:text="${#strings.substring(post.getPost().getPostDate, 0, 10)}"><span>20-11-2023</span></div>
+                        </div>
+                    </div>
+                    <!-- Sử dụng Bootstrap classes để tạo dropdown -->
+
+                    <div class="dropdown">
+                        <button class=" c3 " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            ...
+                        </button>
+                        <ul class="dropdown-menu align-items-sm-center " th:if="${post.getPost().getMyUser().getUser_id() == user_login.getUser_id()}" aria-labelledby="dropdownMenuButton1">
+                            <li th:data-post-id="${post.getPost().getPost_id()}" ><a class="dropdown-item" th:href="'/post/edit/'+ ${post.getPost().getPost_id()}">Sửa</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="confirmDelete()" >Xóa</a></li>
+
+                        </ul>
+                    </div>
+
+
+                </div>
+
+                <div class="Post_content">
+                    <p  th:utext="${post.getPost().getContent()}"  >
+                        Đây là một đoạn văn bản mẫu để hiển thị trong nội dung bài viết của bạn. Bạn có thể thay thế nó bằng nội
+                        dung
+                        thực tế mà bạn muốn hiển thị.
+                    </p>
+                </div>
+
+                <div class="media">
+                    <div class="Border_img" >
+                        <div th:if="${not #strings.isEmpty(post.getPost().getUrl())}"  >
+                            <!-- Kiểm tra định dạng của file để quyết định sử dụng thẻ <img> hoặc <video> -->
+                            <th:block th:if="${post.getPost().getUrl().toLowerCase().endsWith('.mp4') or post.getPost().getUrl().toLowerCase().endsWith('.avi') or post.getPost().getUrl().toLowerCase().endsWith('.mov')}">
+                                <!-- Nếu là video, sử dụng thẻ S<video> -->
+                                <video controls>
+                                    <source th:src="@{/images/img_post/{imageUrl}(imageUrl=${post.getPost().getUrl()})}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </th:block>
+                            <th:block th:else >
+                                <!-- Nếu không phải là video, sử dụng thẻ <img> -->
+                                <img th:src="@{/images/img_post/{imageUrl}(imageUrl=${post.getPost().getUrl()})}" class="img-fluid" alt="" >
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- like share comment       -->
+                <div class="row count-like-commnet-share">
+                    <div class="col-sm " th:utext="${post.amountLike}"  id="likeAmount">300</div>
+                    <div class="col-sm "  th:utext="${post.amountComment}" id="commentAmount">300</div>
+                    <div class="col-sm "  th:utext="${post.amountShare}" id="shareAmount">300</div>
+                </div>
+
+                <div class="custom-container">
+                    <div class="row " style="border-top: solid 1px black;border-bottom: solid 1px black;">
+
+                        <a th:if="${post.blLike}" style="color: blue" class="col-sm column justify-content-center" th:href="'/post/detail/'+ ${post.post.post_id}">
+                            <div class="custom-icon">
+                                <img src="/images/liked.png" alt="Liked Icon">
+                            </div>
+                            Liked
+                        </a>
+
+                        <a th:unless="${post.blLike}" style="color: black" class="col-sm column justify-content-center" th:href="'/post/detail/'+ ${post.post.post_id}">
+                            <div class="custom-icon">
+                                <img src="/images/like.png" alt="Like Icon">
+                            </div>
+                            Like
+                        </a>
+
+
+
+                        <a th:href="'/post/detail/'+ ${post.getPost().getPost_id()}" class="col-sm column justify-content-center"
+                           style="border-left: solid 1px black;border-right: solid 1px black;">
+                            <div class="custom-icon">
+                                <img src="/images/image_comment.png" alt="Comment Icon">
+                            </div>
+                            Comment
+                        </a>
+
+                        <a th:href="'/post/detail/'+ ${post.getPost().getPost_id()}" class="col-sm column justify-content-center">
+                            <div class="custom-icon">
+                                <img src="/images/image_share.png" alt="Share Icon">
+                            </div> 
+                            Share
+                        </a>
+
+                    </div>
+                </div>
+                <div class="list_comment" >
+
+                    <div class="User_Comment" th:each="comment : ${post.getPost().comments}" >
+                        <img class="My_user_avt" th:src="@{/images/{imageUrl}(imageUrl=${comment.getMyUser().getAvata_url()})}" />
+                        <div class="Boder_comment">
+                            <!--USER COMMENT-->
+                            <div class="User_Name1" th:text="${comment.getMyUser().getFull_name()}" >Tên user</div>
+                            <!--COMMENT ID-->
+                            <div class="Content_commnent" th:text="${comment.getContent()}" > chắc chắn là thế rồi. Đây là một đoạn văn bản mẫu để hiển thị trong nội dung bài viết của bạn. Bạn có thể thay thế nó bằng nội
+                                dung
+                                thực tế mà bạn muốn hiển thị.</div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>  
+
+        </div>
+
+
+    </body>
+</html>

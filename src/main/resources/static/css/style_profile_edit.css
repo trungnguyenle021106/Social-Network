@@ -1,0 +1,87 @@
+.container-post {
+    width: 500px;
+    height: auto;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin: 50px auto;
+    margin-bottom: 100px;
+    padding: 20px;
+}
+
+.noidung {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+
+}
+
+.noidung div {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.noidung img {
+    width: 30px;
+    height: 30px;
+}
+
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.img_avt {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+}
+.input-img {
+    width: 100%;
+    height: auto;
+    margin: 16px;
+
+    background: white;
+    border: 1px black solid;
+
+}
+
+.input-img label {
+
+    display: flex;
+    margin: 7px;
+
+}
+
+.Img-add{
+    margin-left: 50%;
+}
+.inp-pass{
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+form input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+form input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}

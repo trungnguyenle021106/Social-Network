@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Document</title>
+        <link rel="stylesheet" href="url" th:href="@{/css/style_post_detail.css}"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    </head>
+
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-3">
+                    <div class="PostDetail">
+
+                        <div class="top_title">
+                            <div class="User_Name">Bài viết của <span class="User_Name">Users</span></div>
+                            <div>
+                                <input type="submit" style="display: none;" id="closeInp" accept="images/Ellipse 2.png">
+                                <label for="closeInp" style="width: 100%; height: 100%; cursor: pointer;">
+                                    <img class="bth_close" src="/images/Ellipse 2.png" /> </img>
+                                </label>
+                            </div>
+                        </div>
+
+
+                        <div class="My_user">
+                            <div style="width: 90%; display: flex;">
+                                <img class="My_user_avt" src="/images/admin 1.png" />
+                                <div>
+                                    <div class="My_User_Name">Tên user</div>
+                                    <div class="post_date"><span>20-11-2023</span></div>
+                                </div>
+                            </div>
+                            <!-- Sử dụng Bootstrap classes để tạo dropdown -->
+                            <div class="dropdown">
+                                <button class="c3" id="dropdownMenuButton" data-toggle="dropdown">...
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#">Sửa</a>
+                                        <a class="dropdown-item" href="#">Xóa</a>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="Post_content">
+                            <p>
+                                Đây là một đoạn văn bản mẫu để hiển thị trong nội dung bài viết của bạn. Bạn có thể thay thế nó bằng nội
+                                dung
+                                thực tế mà bạn muốn hiển thị.
+                            </p>
+                        </div>
+
+                        <div class="Border_img">
+                            <img
+                                src="https://marketplace.canva.com/EAD5ZWq9zKg/1/0/1600w/canva-m%C3%A0u-kem-hoa-c%C3%BAc-v%E1%BB%9Bi-tr%C3%ADch-d%E1%BA%ABn-h%C3%ACnh-n%E1%BB%81n-m%C3%A1y-t%C3%ADnh-YC_KtHtlDG0.jpg"
+                                class="img-fluid" alt="Hình ảnh mô tả">
+                        </div>
+
+                        <div class="row count-like-commnet-share">
+                            <div class="col-sm ">300</div>
+                            <div class="col-sm ">300</div>
+                            <div class="col-sm ">300</div>
+                        </div>
+                        <div class="custom-container">
+                            <div class="row " style="border-top: solid 1px black;border-bottom: solid 1px black;">
+                                <div class="col-sm column justify-content-center">
+                                    <div class="custom-icon">
+                                        <img src="/images/imageLike.png" alt="Like Icon">
+                                    </div>
+                                    Like
+                                </div>
+                                <div class="col-sm column justify-content-center"
+                                     style="border-left: solid 1px black;border-right: solid 1px black;">
+                                    <div class="custom-icon">
+                                        <img src="/images/image_comment.png" alt="Comment Icon">
+                                    </div>
+                                    Comment
+                                </div>
+                                <div class="col-sm column justify-content-center">
+                                    <div class="custom-icon">
+                                        <img src="/images/image_share.png" alt="Share Icon">
+                                    </div>
+                                    Share
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="list_comment">
+                            <div class="User_Comment">
+                                <img class="My_user_avt" src="/images/admin 1.png" />
+                                <div class="Boder_comment">
+                                    <div class="User_Name1">Tên user</div>
+                                    <div class="Content_commnent">
+                                        <span>
+                                            Hãy viết gì đó? Đây là một đoạn văn bản mẫu để hiển thị trong nội dung bài viết
+                                            của bạn. Bạn có thể thay thế nó bằng nội dung
+                                            thực tế mà bạn muốn hiển thị.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="User_Comment">
+                                <img class="My_user_avt" src="/images/admin 1.png" />
+                                <div class="Boder_comment">
+                                    <div class="User_Name1">Tên user</div>
+                                    <div class="Content_commnent">Hãy viết gì đó?</div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="My_user_comment">
+                            <form class="User_Comment">
+                                <img class="My_user_avt" src="/images/admin 1.png" />
+                                <div class="Boder_comment">
+                                    <div class="User_Name1">Tên user</div>
+                                    <div style="display: flex;">
+                                        <textarea class=" My_Content_commnent" placeholder="Hãy viết gì đó?"></textarea>
+                                        <div>
+                                            <input type="submit" style="display: none;" id="inp_send" accept="images/*">
+                                            <label for="inp_send" style="width: 100%; height: 100%; cursor: pointer;">
+                                                <img class="img_send" src="/images/send-message.png">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-3"></div>
+                <div class="col-md-3"></div>
+            </div>
+        </div>
+
+    </body>
+
+</html>

@@ -1,0 +1,426 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+header{
+    width: 100%;
+    height: auto;
+}
+header .header_title{
+    margin-left: 10px;
+    font-size: 14px;
+    color: #c1c1c1;
+}
+.header_primary{
+    background-color: white;
+    height: 70px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header_left{
+    height: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.logo{
+    height: auto;
+    width: auto;
+}
+.header_left img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-left: 10px;
+}
+.header_left input{
+    height: 30px;
+    width: 200px;
+    outline-style: none;
+    background-color: #d9d9d9;
+    border: none;
+    border-radius: 10px;
+}
+.header_left .search input::placeholder{
+    color: black;
+    text-align: center;
+}
+.create-post {
+    border-radius: 5px;
+    padding: 4px;
+    text-decoration: none;
+}
+.header_right{
+    height: auto;
+
+}
+.users {
+    position: relative;
+    display: inline-block;
+}
+
+
+#dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+#dropdown-menu button {
+    display: block;
+    width: 100%;
+    text-align: left;
+}
+
+/*.users:hover #userMenu {
+    display: block;
+}*/
+
+.users span{
+    margin-right: 20px;
+    margin-top: auto;
+    
+}
+.header_right img{
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+section{
+    width: 100%;
+}
+.content{
+    width: 100%;
+    min-height: 800px;
+    margin: 0 auto;
+    background-color: whitesmoke;
+    display: flex;
+}
+
+.left{
+    margin-top: 10px;
+    height: auto;
+    width: 25%;
+
+}
+.left .left_title{
+    margin-left: 10px;
+    font-size: 14px;
+}
+.left_user{
+    height: 60px;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    margin-left: 10px;
+}
+.left_user img{
+    max-width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+.left_name p {
+    margin: 2px;
+}
+.left_user .img_left{
+    
+}
+.left_user .left_detail{
+    height: 38px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.left_user input{
+    width: 100px;
+    height: 20px;
+    background-color: #8ad5ff;
+    border: none;
+    cursor: pointer;
+    font-size: 11px;
+    text-align: center;
+}
+
+
+
+
+.middle{
+    width: 50%;
+}
+.post_title{
+    color: #c1c1c1;
+    font-size: 12px;
+}
+.post{
+    width: 392px;
+    height: auto;
+    background-color: #ffffff;
+    border-radius: 10px;
+}
+.post_detail{
+    height: auto;
+    width: 380px;
+    margin: 0 auto;
+}
+.post_detail .post_header{
+    padding-top: 5px;
+    display: flex;
+    gap: 10px;
+    font-size: 14px;
+}
+.post_header .img_post{
+    height: 38px;
+    width: 38px;
+}
+.post_header .img_post img{
+    max-width: 38px;
+    max-height: 38px;
+    border-radius: 50%;
+}
+.post_content{
+    width: 380px;
+    margin-top: 5px;
+}
+.post_content .content_text{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+.post_content img{
+    max-width: 380px;
+    object-fit: cover;
+}
+
+.post_footer{
+
+}
+.footer_box_1{
+    width: 100%;
+    height: 40px;
+    display: flex;
+    border-top: 1px solid #c5cbbf;
+    border-bottom: 1px solid #c5cbbf;
+    margin-top: 20px;
+}
+.footer_box_1 input{
+    width: 190px;
+    height: 40px;
+    border: none;
+    text-align: center;
+    background-color: transparent;
+}
+.comment{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.comment .img_comment{
+    width: 30px;
+    height: 30px;
+}
+.comment .img_comment img{
+    max-width: 30px;
+    max-height: 30px;
+    border-radius: 50%;
+}
+.comment .name_comment{
+    font-size: 14px;
+}
+.comment .content_comment{
+    height: auto;
+    font-size: 12px;
+}
+
+
+.right{
+    width: 25%;
+}
+.right_title{
+    margin-left: 63px;
+    font-size: 14px;
+}
+.line{
+    width: 80%;
+    border-bottom: 1px solid #c5cbbf;
+    float: right;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.right_box_1{
+    width: 100%;
+    height: auto;
+}
+.box_1_primary{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+.right_user{
+    height: 50px;
+    width: 224px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 10px;
+    font-size: 14px;
+    margin-left: 63px;
+}
+.right_user img{
+    max-width: 45px;
+    align-items: center;
+    border-radius: 50%;
+}
+.right_user .img_right{
+    height: 44px;
+}
+.right_user .right_detail{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.right_name{
+    width: 100%;
+    text-align: center;
+    margin-bottom: 0px;
+}
+.right_name p {
+    margin-bottom: 3px;
+}
+.btn_right{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    gap: 10px;
+}
+.right_user input{
+    width: 80px;
+    height: 20px;
+    background-color: #8ad5ff;
+    border: none;
+    cursor: pointer;
+    font-size: 11px;
+    text-align: center;
+}
+.right_user .btn_delete{
+    background-color: #ffffff;
+}
+
+.box_2_primary{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+.right_user_box_2{
+    height: 50px;
+    width: 224px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    margin-left: 63px;
+}
+.right_user_box_2 img{
+    max-width: 44px;
+    height: 44px;
+    border-radius: 50%;
+}
+.right_user_box_2 .img_right_box_2{
+    height: 44px;
+}
+.right_name_box_2{
+    text-align: center;
+}
+
+/*TÌM KIẾM*/
+#search-box {
+  width: 300px;
+  padding: 10px;
+  font-size: 16px;
+  position: relative; /* Thêm thuộc tính position: relative cho search box */
+}
+
+/* Thêm CSS cho gợi ý */
+#suggestion-box {
+  height: auto;
+  width: 400px;
+  background-color: #ffffff;
+  position: absolute; /* Sử dụng position: absolute cho dropdown menu */
+  z-index: 9999;
+  top: 100%; /* Đặt vị trí top để dropdown menu hiển thị xuống dưới search box */
+  left: 0;
+  display: none;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.suggestion-item {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.suggestion-item:hover {
+  background-color: #f0f0f0;
+}
+
+
+.User_Search {  
+    width: 100%;
+    min-height: 60px;
+    display: flex;
+}
+
+.User_Avt_Search {
+    width: 46px;
+    height: 46px;
+    margin-right: 10px;
+
+}
+
+.Boder_Search {
+    width:60%; 
+    min-height: 72px;
+    border-radius: 10px;
+    margin-left: 30px;
+    margin-right: 10px;
+    padding: 10px; /* Thêm padding để tạo khoảng cách giữa nội dung và biên của .Boder_comment */
+    flex-grow: 1;
+}
+
+.User_Name1_Search {
+    width:100%;
+    padding-left: 15px;
+    text-align: left;
+    color: black;
+    font-size: 20px;
+    font-family: Inter;
+    word-wrap: break-word;
+    font-weight: bold;
+
+}
+
+.container {
+  position: relative;
+}
+
+#dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right:20px;
+}

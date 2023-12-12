@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+        <title>Chat Application</title>
+
+        <link rel="stylesheet" href="url" th:href="@{/css/style_post_detail.css}"/>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    </head>
+    <body onload="loadFunctions()">       
+        <noscript>
+        <h2>Sorry! Your browser doesn't support Javascript</h2>
+        </noscript>
+
+        <!--        GỬI DỮ LIỆU TỚI SOCKET-->
+        <div style="display:none">
+            <h1 class="title">Enter a username and room ID</h1>
+            <form id="usernameForm" name="usernameForm">
+                <div class="form-group">
+                    <!--                    Tên người gửi lấy tên của user đang đăng nhập-->
+                    <input type="text" id="name" th:value="${myUser.getUser_id}" placeholder="Username" autocomplete="off" class="form-control" />
+                    <!--                    Tên người gửi lấy tên của user đang đăng nhập-->             
+                </div>
+                <div class="form-group">
+                    <!--                    ID của post hiện tại lấy dùng để tạo phòng tham gia giao tiếp socket-->
+                    <input type="text" id="room-id" th:value="${post.getPost_id}" placeholder="Room ID" autocomplete="off" class="form-control" />
+                    <!--                    ID của post hiện tại lấy dùng để tạo phòng tham gia giao tiếp socket-->
+                </div>
+            </form>
+        </div>
+
+
+        <!--        GỬI DỮ LIỆU TỚI SOCKET-->
+
+
+        <!--POST-->
+        <div style="display: none">
+
+            <!--            GỬI DỮ LIỆU TỚI JS BAO GỒM ID POST VÀ USER ID-->
+            <input type="text" id="postID" name="postID" th:value="${post.getPost_id}">
+            <input type="text" id="myUserID" name="myUserID" th:value="${myUser.getUser_id}">          
+            <!--            GỬI DỮ LIỆU TỚI JS BAO GỒM ID POST VÀ USER ID-->
+
+        </div>
+
+        <div style="width:100%; height: auto ; display: none" id="shareForm">
+            <h3 style="margin: 10px auto;width:30%">CHỌN NGƯỜI MUỐN CHIA SẺ</h3>
+            <div class="slider-container">
+                <div class="slide">
+                    <label class="container" th:each="fshare : ${list_fshare}">
+
+                        <input th:if="${fshare.getIsShared == true}" type="checkbox" checked 
+                               style="float:left;width: 30px; height: 30px; margin-top: 10px;" th:id="${'cb_' + fshare.getFriendUser.getUser_id}">
+                        <input th:unless="${fshare.getIsShared == true}" type="checkbox"  
+                               style="float:left;width: 30px; height: 30px; margin-top: 10px;" th:id="${'cb_' + fshare.getFriendUser.getUser_id}">
+
+                        <img style="float:left" class="My_user_avt" th:src="@{/images/img_avt/{imageUrl}(imageUrl=${fshare.getFriendUser.getAvata_url})}" />
+                        <textarea style="resize: none;width: 70%;border:none; margin:10px; margin-left: 50px ;float: left;font-size: 20px" readonly="" th:text="${fshare.getFriendUser.getFull_name}"></textarea>
+
+                    </label>
+                </div>
+            </div>
+            <div style="height:100px; width: 30%; height: auto; margin: 10px auto; display: flex">
+                <button style="width: 48%; margin: 5px auto" onclick="acceptShareButton()">CHẤP NHẬN</button>
+                <button style="width: 48%; margin: 5px auto" onclick="cancelShareButton()">HỦY</button>
+            </div>
+        </div>
+
+        <!--        CHUYỂN TRANG KHI POST CÓ THAY ĐỔI-->
+        <div style="display:none; margin: 400px auto;text-align: center" id="movePage">
+            <a onclick="moveToPage()" style="font-size: 50px; text-decoration: underline; color: blue; cursor: pointer">BÀI VIẾT NÀY ĐÃ BỊ XÓA, BẤM VÀO ĐÂY ĐỂ CHUYỂN TRANG</a>
+        </div>
+        <!--         CHUYỂN TRANG KHI POST CÓ THAY ĐỔI-->
+
+        <div class="container" id="postDetail">
+            <div class="row">                
+                <div>
+                    <div class="PostDetail">
+
+                        <div class="top_title">
+                            <!--                            Hiển thị tên người đăng bài viết-->
+                            <div class="User_Name">Bài viết của <span class="User_Name" th:utext="${post.getMyUser.getFull_name}">Users</span></div>
+                            <!--                            Hiển thị tên người đăng bài viết-->                           
+                            <div>
+                                <a href="/homes"  id="closeInp">
+                                    <label style="width: 100%; height: 100%; cursor: pointer;">
+                                        <img class="bth_close" src="/images/Ellipse 2.png" />
+                                    </label>
+                                </a>
+                            </div>
+                        </div>
+
+
+                        <div class="My_user">
+                            <div style="width: 90%; display: flex;">
+                                
+                                  <!--                            TN ĐÃ CHỈNH SỬA Ở ĐÂY  -->
+                            <form th:action="@{/us/profile/{userId}(userId=${post.getMyUser.getUser_id})}" method="get">
+
+                                <button style="border:none; background-color: white" type="submit">
+                                     <img class="My_user_avt" th:src="@{/images/img_avt/{imageUrl}(imageUrl=${post.getMyUser.getAvata_url})}" >
+                                </button>
+                            </form>
+                            <!--TN ĐÃ CHỈNH SỬA Ở ĐÂY  -->
+                                
+<!--                                <img class="My_user_avt" th:src="@{/images/img_avt/{imageUrl}(imageUrl=${post.getMyUser.getAvata_url})}" >-->
+                                <div>
+                                    <div class="My_User_Name" th:utext="${post.getMyUser.getFull_name}">Tên user</div>
+                                    <div class="post_date" th:text="${#strings.substring(post.getPostDate, 0, 10)}"><span>20-11-2023</span></div>
+                                </div>
+                            </div>
+
+                            <!-- Sử dụng Bootstrap classes để tạo dropdown -->
+                            <div th:if="${post.getMyUser.getUser_id == myUser.getUser_id}" style="display: block" class="btn-group dropleft" >
+                                <button style="border: none; background: white; color: black; font-size: 32px;" class="btn btn-secondary dropdown" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    ...
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                    <button class="dropdown-item" onclick="deletePostButton()" type="button">XÓA</button>
+                                    <form th:action="@{/post/edit/{id}(id=${post.getPost_id})}" method="get" >
+                                        <button class="dropdown-item" type="submit">SỬA</button>
+                                    </form>                             
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="Post_content">
+                            <p th:text="${post.getContent}">
+                                Đây là một đoạn văn bản mẫu để hiển thị trong nội dung bài viết của bạn. Bạn có thể thay thế nó bằng nội
+                                dung
+                                thực tế mà bạn muốn hiển thị.
+                            </p>
+                        </div>
+
+                        <div class="media">
+                            <div class="Border_img" >
+                                <div th:if="${not #strings.isEmpty(post.getUrl())}"  >
+                                    <!-- Kiểm tra định dạng của file để quyết định sử dụng thẻ <img> hoặc <video> -->
+                                    <th:block th:if="${post.getUrl().toLowerCase().endsWith('.mp4') or post.getUrl().toLowerCase().endsWith('.avi') or post.getUrl().toLowerCase().endsWith('.mov')}">
+                                        <!-- Nếu là video, sử dụng thẻ S<video> -->
+                                        <video controls>
+                                            <source th:src="@{/images/img_post/{imageUrl}(imageUrl=${post.getUrl()})}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </th:block>
+                                    <th:block th:else >
+                                        <!-- Nếu không phải là video, sử dụng thẻ <img> -->
+                                        <img th:src="@{/images/img_post/{imageUrl}(imageUrl=${post.getUrl()})}" class="img-fluid" alt="" >
+                                    </th:block>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row count-like-commnet-share">
+                            <div class="col-sm " th:text="${amountLikes}" id="likeAmount">300</div>
+                            <div class="col-sm " th:text="${amountComments}"id="commentAmount">300</div>
+                            <div class="col-sm " th:text="${amountShares}"id="shareAmount">300</div>
+                        </div>
+                        <div class="custom-container">
+                            <div class="row "  style="border-top: solid 1px black;border-bottom: solid 1px black;">
+                                <button style="border: none; background: white" class="col-sm column justify-content-center" id="likeButton">       
+                                    <input th:if="${like == null}" style="display:none" id="likeId" value="0">
+                                    <input th:unless="${like == null}" style="display:none" id="likeId" th:value="${like.getLike_id}">
+                                    <input th:if="${like == null}" style="display:none" id="inputLike" value="NOLIKE">
+                                    <input th:unless="${like == null}" style="display:none" id="inputLike" th:value="${like.getStatus}">
+
+                                    <img class="custom-icon1" id="likeImg" src="">
+                                    <span id="likeText">Like</span>
+
+                                </button>
+                                <button class="col-sm column justify-content-center"
+                                        style="border-right: solid 1px black; border-left: solid 1px black; border-bottom: none; border-top: none;  background: white" >
+                                    <div class="custom-icon">
+                                        <img src="/images/image_comment.png" alt="Comment Icon">
+                                    </div>
+                                    Comment
+                                </button>
+
+                                <button style="border: none; background: white" th:if="${post.getMyUser.getUser_id == myUser.getUser_id}" disabled class="col-sm column justify-content-center" onclick="shareButton()">
+                                    <div class="custom-icon">
+                                        <img src="/images/image_share.png" alt="Share Icon">
+                                    </div>
+                                    Share
+                                </button>
+                                <button style="border: none; background: white" th:unless="${post.getMyUser.getUser_id == myUser.getUser_id}"  class="col-sm column justify-content-center" onclick="shareButton()">
+                                    <div class="custom-icon">
+                                        <img src="/images/image_share.png" alt="Share Icon">
+                                    </div>
+                                    Share
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="list_comment" id="messageArea">
+
+                            <div class="User_Comment" th:each="comment : ${comments}" th:id="${'User_Comment_'+comment.getComment_id}">
+                                
+                                 <form th:action="@{/us/profile/{userId}(userId=${comment.getMyUser.getUser_id})}" method="get">
+
+                                <button style="border:none; background-color: white" type="submit">
+                                     <img class="My_user_avt" th:src="@{/images/img_avt/{imageUrl}(imageUrl=${comment.getMyUser.getAvata_url})}" />
+                                </button>
+                            </form>
+                            <!--TN ĐÃ CHỈNH SỬA Ở ĐÂY  -->
+                                
+<!--                                <img class="My_user_avt" th:src="@{/images/img_avt/{imageUrl}(imageUrl=${comment.getMyUser.getAvata_url})}" />-->
+                                <div class="Boder_comment">
+                                    <!--                                    USER COMMENT-->
+                                    <div class="User_Name1" th:utext="${comment.getMyUser.full_name}" th:id="${comment.getMyUser.getUser_id}">Tên user</div>
+                                    <div class="post_date" th:text="${#strings.substring(comment.getCommentDate, 0, 10)}"><span>20-11-2023</span></div>
+                                    <!--                                    COMMENT -->
+                                    <div class="Content_commnent" th:utext="${comment.getContent}" th:id="'input_' + ${comment.getComment_id}"></div>
+
+                                    <button class="Delete_Comment_Button" th:id="'delete_'+${comment.getComment_id}"
+                                            style="display: none;">XÓA</button>                           
+
+                                    <!--                                    BUTTON SỬA -->
+                                    <button class="Edit_Comment_Button" th:id="'edit_'+${comment.getComment_id}" 
+                                            style="display: none;">SỬA</button>
+
+
+                                    <!--                                    BUTTON SỬA -->
+
+
+                                    <button class="Accept_Edit_Comment_Button" th:id="'accept_' + ${comment.getComment_id}"
+                                            style="display: none;">CHẤP NHẬN</button>
+                                    <button class="Cancel_Edit_Comment_Button" th:id="'cancel_' + ${comment.getComment_id}"
+                                            style="display: none;">HỦY</button>
+                                </div>
+                                <button class="c3" th:id="'ellipsis_'+${comment.getComment_id}" 
+                                        th:if="${comment.getMyUser.getUser_id == myUser.getUser_id}">...                                  
+                                </button>
+                                <button class="c3" th:id="'ellipsis_'+${comment.getComment_id}" 
+                                        th:unless="${comment.getMyUser.getUser_id == myUser.getUser_id}" style="display: none;">...                                  
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="My_user_comment" >
+                            <div class="My_User_Comment">
+                                
+                                 <form th:action="@{/us/profile/{userId}(userId=${myUser.getUser_id})}" method="get">
+
+                                <button style="border:none; background-color: white" type="submit">
+                                      <img class="My_user_avt" th:src="@{/images/img_avt/{imageUrl}(imageUrl=${myUser.getAvata_url})}" />
+                                </button>
+                            </form>
+                            <!--TN ĐÃ CHỈNH SỬA Ở ĐÂY  -->
+                                
+<!--                                <img class="My_user_avt" th:src="@{/images/img_avt/{imageUrl}(imageUrl=${myUser.getAvata_url})}" />-->
+                                <div class="Boder_comment">
+
+                                    <div class="User_Name1" th:utext="${myUser.getFull_name}" style="position: relative">Tên user</div>
+                                    <span onclick="placeHolder()" id="placeholder" style=";margin-top: 10px;height: 40px;width: 26%;position: absolute;color: gray;" >
+                                        <p style="margin-left: 10px; margin-top: 5px">Viết bình luận...</p>
+                                    </span>
+
+                                    <div onclick="placeHolder()" contentEditable="true" class="Content_commnent" id="message" 
+                                         style="border: 3px solid black;border-radius: 15px ;background-color: white; ">
+
+                                    </div>
+
+
+                                    <button type="button"  class="Send_button" id="addButton" style="  background-color: white; font-size: 20px; float: right ; " >
+                                        SEND    <img style="margin-left: 30px" src="/images/send-message.png">
+                                    </button> 
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!--        <!--POST-->
+
+
+
+        <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+        <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+        <script src="/webjars/js-cookie/js.cookie.js"></script>
+        <script src="/js/post_detail.js"></script>
+        <script src="/js/post_detail_1.js"></script>
+    </body>
+</html>

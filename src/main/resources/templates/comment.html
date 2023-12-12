@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>comment</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Comment</h1>
+        <table border="1">
+            <tr>
+                <th>CommentID</th>
+                <th>Content</th>
+                <th>Post_id</th>
+                 <th>User_id</th>
+            </tr>
+            <tr th:each ="row, state:${list}">
+                <td th:utext="${row.comment_id}"></td>
+                <td th:utext="${row.getContent()}"></td>
+                <td th:utext="${row.getPost().getPost_id()}"></td>
+                <td th:utext="${row.getMyUser().getUser_id()}"></td>
+                <td><a th:href="'/comment/edit/'+ ${row.comment_id}">Edit</a></td>   
+                <td><a th:href="'/comment/delete/'+ ${row.comment_id}">Delete</a></td>     
+            </tr>
+            
+        </table>
+        <h1>Thêm BL Mới</h1>
+        <form method="comment" action="/comment/add" class="form">
+                <div class="mb-3">
+                    <label for="post_id" class="form-label">POST ID:</label>
+                    <input type="text" id="post_id" name="post_id" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="my_user_id" class="form-label">MY USER ID:</label>
+                    <input type="text" id="user_id" name="user_id" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="content" class="form-label">COTENT:</label>
+                    <input type="text" id="content" name="content" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="cmt_date" class="form-label">DATE:</label>
+                    <input type="date" id="cmt_date" name="cmt_date" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary" style="margin: 10px 50px">Bình Luận</button>
+            </form>
+    </body>
+    
+</html>

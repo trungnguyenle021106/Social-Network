@@ -1,0 +1,310 @@
+.PostDetail {
+    width: 600px;
+    min-height: 867px;
+    margin: 50px auto;
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px black solid;
+}
+
+.top_title{
+    width: 100%;
+    height: 60px;
+    display: flex;
+    border-bottom: solid 1px black;
+    align-items: center;
+
+}
+.User_Name {
+
+    width: 90%;
+    text-align: center;
+    color: black;
+    font-size: 20px;
+    font-family: Inter;
+    word-wrap: break-word;
+    font-weight: bold;
+
+}
+
+.btn_close {
+    height: 55px;
+    width: 55px;
+
+}
+
+.My_user {
+    height: auto;
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+}
+
+.My_user_avt {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    left: 16px;
+    border-radius: 50%;
+}
+
+.My_User_Name {
+    width: auto;
+    height: 24px;
+    margin-left: 30px;
+    color: black;
+    font-size: 20px;
+    font-family: Inter;
+    font-weight: 600;
+    word-wrap: break-word
+}
+
+.post_date {
+    margin-left: 39px;
+    color: black;
+    font-size: 16px;
+    font-family: Inter;
+    font-weight: 500;
+    word-wrap: break-word
+}
+
+.c3 {
+    width: 40px;
+    height: 40px;
+    left: 484px;
+    border: none;
+    background: white;
+    text-align: center;
+    color: black;
+    font-size: 32px;
+    font-family: Inter;
+    font-weight: 600;
+    word-wrap: break-word;
+    display: block;
+}
+
+.Post_content {
+    min-height: 40px;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    color: black;
+    font-size: 20px;
+    font-family: Inter;
+    font-weight: 500;
+    word-wrap: break-word;
+}
+
+.Border_img {
+    width: auto;
+    min-height: 268px;
+    max-height: 600px;
+    margin-bottom: 10px;
+    margin-left: 15px;
+    margin-right: 15px;
+    left: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    /* Đảm bảo ảnh không tràn ra ngoài div */
+}
+
+.Border_img img {
+    height: auto;
+    width: 100%;
+    border-radius: 10px;
+}
+.Border_img video {
+    height: auto;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.count-like-commnet-share {
+
+    text-align: center;
+    color: black;
+    font-size: 16px;
+    font-family: Inter;
+    font-weight: 600;
+    word-wrap: break-word
+}
+
+.custom-container {
+    margin-top: 10px;
+
+}
+.custom-container a{
+    color: black;
+    text-decoration: none;
+}
+
+.custom-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    /* Khoảng cách giữa icon và chữ */
+}
+.custom-icon img{
+    width: 40px;
+    /* Độ rộng của hình ảnh icon */
+    height: 40px;
+    /* Độ cao của hình ảnh icon */
+}
+.custom-icon1{
+    width:25%;
+}
+.column {
+    display: flex;
+    align-items: center;
+}
+
+.list_comment {
+    margin-top: 20px;
+    min-height: 50px;
+}
+
+.User_Comment {
+    width: 100%;
+    min-height: 76px;
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.My_User_Comment{
+    width: 100%;
+    min-height: 76px;
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.User_Avt {
+    width: 46px;
+    height: 46px;
+    margin-right: 10px;
+
+}
+
+.Boder_comment {
+    width:60%;
+    min-height: 72px;
+    background: #FDE8E8;
+    border-radius: 10px;
+    margin-left: 30px;
+    margin-right: 10px;
+    padding: 10px; /* Thêm padding để tạo khoảng cách giữa nội dung và biên của .Boder_comment */
+    flex-grow: 1;
+}
+.Boder_comment button{
+    float:left;
+    margin: 5px 5px;
+}
+
+.Boder_comment input{
+    width: 80%;
+    float:left;
+}
+.User_Name1 {
+    width:100%;
+    padding-left: 15px;
+    text-align: left;
+    color: black;
+    font-size: 20px;
+    font-family: Inter;
+    word-wrap: break-word;
+    font-weight: bold;
+
+}
+
+.Content_commnent {
+    width:100%;
+    padding-left: 15px;
+    margin-top: 8px;
+    color: black;
+    font-size: 20px;
+    font-family: Inter;
+    font-weight: 500;
+    word-wrap: break-word;
+    
+}
+.My_user_comment{
+    min-height: 77px;
+    width: 100%;
+    border-top: solid 1px black;
+    padding-top: 15px;
+}
+.img_send{
+    margin-left: 5px;
+    margin-top: 10px;
+    height: 25px;
+    width: 25px;
+}
+.My_Content_commnent{
+    width: 100%;
+    border-radius: 10px;
+    margin-left: 15px;
+    margin-right: 10px;
+    font-size: 20px;
+    border: none;
+    resize: none;
+}
+
+.Delete_Comment_Button{
+    border-radius: 10px;
+    background-color: red;
+    color:whitesmoke;
+}
+
+.Edit_Comment_Button{
+    border-radius: 10px;
+    background-color: #1877F2;
+    color:whitesmoke;
+}
+
+.Accept_Edit_Comment_Button{
+    border-radius: 10px;
+    background-color: limegreen;
+    color:white;
+}
+
+.Cancel_Edit_Comment_Button{
+    border-radius: 10px;
+    background-color: red;
+    color:whitesmoke;
+}
+
+.bordered-input {
+    border: 3px solid black;
+    border-radius: 10px;
+}
+.Send_button {
+    font-weight: BOLD;
+    width: 30%;
+    border: 3px solid black;
+    border-radius: 10px;
+}
+
+
+/* SLIDE */
+.slider-container {
+    width: 30%;
+    height: auto;
+    overflow-y: scroll;
+    margin: 0px auto;
+    border:solid 1px black;
+}
+
+.slide {
+    width: 100%;
+    height: 250px;
+}
+
+
+/* SLIDE */
+
+textarea:focus {
+    outline: none;
+}
